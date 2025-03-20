@@ -7,6 +7,24 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+# Laravel Blog
+
+Этот проект — простой блог, созданный на Laravel.
+   
+## Функциональность
+
+- Создание, редактирование и удаление постов
+- Аутентификация пользователей
+- Комментарии и лайки (планируется)
+
+## Стек технологий
+
+- PHP 8+ / Laravel
+- MySQL / SQLite
+- Tailwind CSS / Bootstrap
+- Vue.js (планируется)
+
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
