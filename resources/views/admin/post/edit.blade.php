@@ -51,7 +51,7 @@
                             <div class=" mb-4 w-50 mt-3">
                                 <div class="card-title mb-0"><h5>Добавить превью</h5> </div>
                                 <div class="w-50 mb-2">
-                                    <img src="{{ Storage::url($post->preview_image) }}" alt="preview_image" class="w-50">
+                                    <img src="{{ url('storage/', $post->preview_image) }}" alt="preview_image" class="w-50">
                                 </div>
                                 <div class="card-body">
                                     <div class="input-group mb-3">
@@ -66,7 +66,7 @@
                             <div class="mb-4 w-50">
                                 <div class="card-title mb-0"><h5>Добавить главное изображение</h5></div>
                                 <div class="w-50 mb-3">
-                                    <img src="{{ Storage::url($post->main_image) }}" alt="main_image" class="w-50">
+                                    <img src="{{ url('storage/', $post->main_image) }}" alt="main_image" class="w-50">
 
                                 </div>
                                 <div class="card-body">

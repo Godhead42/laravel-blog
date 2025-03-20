@@ -5,7 +5,6 @@ use App\Http\Controllers\Personal\Comment\EditController;
 use App\Http\Controllers\Personal\Comment\UpdateController;
 use App\Http\Controllers\Personal\Liked\DeleteController;
 use App\Http\Controllers\Personal\PersonalController;
-use App\Http\Controllers\Main\IndexController;
 use App\Http\Controllers\Admin\Post\IndexController as PostIndexController;
 use App\Http\Controllers\Admin\Post\CreateController as PostCreateController;
 use App\Http\Controllers\Admin\Post\StoreController as PostStoreController;
@@ -37,7 +36,10 @@ use App\Http\Controllers\Admin\User\DeleteController as UserDeleteController;
 use App\Http\Controllers\Personal\Liked\IndexController as LikedController;
 use App\Http\Controllers\Personal\Comment\IndexController as CommentController;
 use App\Http\Controllers\Personal\Comment\DeleteController as CommentDeleteController;
+use App\Http\Controllers\Main\IndexController as MainIndexController;
+use App\Http\Controllers\Post\IndexController as PostMainIndexController;
 
+use App\Http\Controllers\Post\ShowController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -47,9 +49,14 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\VerificationController;
 
+Route::group(['namespace' => 'Main'], function () {
+    Route::get('/', [MainIndexController::class, '__invoke'])->name('main.index');
+});
 
-Route::get('/', [IndexController::class, '__invoke'])->name('main.index');
-
+Route::group(['prefix' => 'posts'], function () {
+    Route::get('/', [PostMainIndexController::class, '__invoke'])->name('post.index');
+    Route::get('/{post}', [ShowController::class, '__invoke'])->name('post.show');
+});
 
 
 Route::middleware(['auth', 'verified'])->prefix('personal')->group(function () {
