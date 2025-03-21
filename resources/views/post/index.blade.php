@@ -9,10 +9,23 @@
                 @foreach ($posts as $post)
                 <div class="col-md-4 fetured-post blog-post" data-aos="fade-up">
                     <div class="blog-post-thumbnail-wrapper">
-                        <img src="{{ url('storage/', $post->preview_image) }}" alt="preview_image" class="w-50">
+                        <img src="{{ url('storage/', $post->preview_image) }}" alt="preview_image">
                     </div>
-                    <p class="blog-post-category">{{ $post->category->title }}</p>
-                    <a href="{{ route('post.show', $post->id) }}" class="blog-post-permalink">
+                    <div class="d-flex justify-content-between">
+                        <p class="blog-post-category">{{ $post->category->title }}</p>
+                        <form action="{{ route('post.like.store', $post->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="border-0 bg-transparent">
+                                @auth()
+                                    @if(auth()->user()->likedPosts->contains($post->id))
+                                        <i class="fas fa-heart"></i>
+                                    @else
+                                        <i class="far fa-heart"></i>
+                                    @endif
+                                @endauth
+                            </button>
+                        </form>
+                    </div>                    <a href="{{ route('post.show', $post->id) }}" class="blog-post-permalink">
                         <h6 class="blog-post-title">{{ $post->title }}</h6>
                     </a>
                 </div>
@@ -31,7 +44,14 @@
                                 <div class="blog-post-thumbnail-wrapper">
                                     <img src="{{ url('storage/' . $post->preview_image) }}" alt="blog post">
                                 </div>
-                                <p class="blog-post-category">{{ $post->category->title }}</p>
+                                <div class="d-flex justify-content-between">
+                                    <p class="blog-post-category">{{ $post->category->title }}</p>
+                                    <form action="#">
+                                        <button type="submit" class="border-0 bg-transparent">
+                                            <i class="far fa-heart"></i>
+                                        </button>
+                                    </form>
+                                </div>
                                 <a href="{{ route('post.show', $post->id) }}" class="blog-post-permalink">
                                     <h6 class="blog-post-title">{{ $post->title }}</h6>
                                 </a>

@@ -150,7 +150,7 @@
             </ul>
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <form action="{{route('logout')}}" method="post">
+                    <form action="{{route('logout')}}" method="POST">
                         @csrf
                         <input type="submit" class="btn btn-danger"  value="Выйти">
                     </form>

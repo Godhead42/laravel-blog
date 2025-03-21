@@ -14,13 +14,16 @@ class PostService
 
             DB::beginTransaction();
             if (isset($data['tag_ids'])) {
-                $tagIds = $data['tag_ids'];
+                $tagIds = (array) $data['tag_ids']; // Преобразуем в массив
                 unset($data['tag_ids']);
+            } else {
+                $tagIds = []; // Если тегов нет, передаем пустой массив
             }
 
             $data['preview_image'] = Storage::disk('public')->put('/images', $data['preview_image']);
             $data['main_image'] = Storage::disk('public')->put('/images', $data['main_image']);
             $post = Post::firstOrCreate($data);
+
             if (isset($tagIds)) {
                 $post->tags()->attach($tagIds);
             }
@@ -32,32 +35,41 @@ class PostService
 
     }
 
-    public function update($data, $post)
-    {
-        try {
+    public function update($data, Post $post)
+{
+    try {
+        DB::beginTransaction();
 
-            DB::beginTransaction();
-            if (isset($data['tag_ids'])) {
-                $tagIds = $data['tag_ids'];
-                unset($data['tag_ids']);
-            }
 
-            if (isset($data['preview_image'])) {
-                $data['preview_image'] = Storage::disk('public')->put('/images', $data['preview_image']);
-            }
-            if (isset($data['main_image'])) {
-                $data['main_image'] = Storage::disk('public')->put('/images', $data['main_image']);
-            }
-            if (isset($tagIds)) {
-                $post->tags()->attach($tagIds);
-            }
-            DB::commit();
-        } catch (\Exception $exception) {
-            DB::rollBack();
-            abort(500);
+        if (isset($data['tag_ids'])) {
+            $tagIds = (array) $data['tag_ids']; // Преобразуем в массив
+            unset($data['tag_ids']);
+        } else {
+            $tagIds = []; // Если тегов нет, передаем пустой массив
         }
 
 
-        return $post;
+        if (isset($data['preview_image'])) {
+            $data['preview_image'] = Storage::disk('public')->put('/images', $data['preview_image']);
+        }
+        if (isset($data['main_image'])) {
+            $data['main_image'] = Storage::disk('public')->put('/images', $data['main_image']);
+        }
+
+
+        $post->update($data);
+
+        $post->tags()->sync($tagIds);
+
+        DB::commit();
+
+    } catch (\Exception $exception) {
+        DB::rollBack();
+        abort(500);
     }
+
+    return $post;
+}
+
+
 }

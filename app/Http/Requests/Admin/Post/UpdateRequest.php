@@ -19,6 +19,16 @@ class UpdateRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
+
+    protected function prepareForValidation()
+    {
+        if (isset($this->tag_ids) && !is_array($this->tag_ids)) {
+            $this->merge([
+                'tag_ids' => (array) $this->tag_ids,
+            ]);
+        }
+    }
+
     public function rules(): array
     {
         return [

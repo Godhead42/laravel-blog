@@ -35,9 +35,11 @@ use App\Http\Controllers\Admin\User\UpdateController as UserUpdateController;
 use App\Http\Controllers\Admin\User\DeleteController as UserDeleteController;
 use App\Http\Controllers\Personal\Liked\IndexController as LikedController;
 use App\Http\Controllers\Personal\Comment\IndexController as CommentController;
-use App\Http\Controllers\Personal\Comment\DeleteController as CommentDeleteController;
+use App\Http\Controllers\Personal\Comment\StoreController as CommentDeleteController;
 use App\Http\Controllers\Main\IndexController as MainIndexController;
 use App\Http\Controllers\Post\IndexController as PostMainIndexController;
+use \App\Http\Controllers\Post\Comment\StoreController as CommentStoreController;
+use \App\Http\Controllers\Post\Like\StoreController as LikeStoreController;
 
 use App\Http\Controllers\Post\ShowController;
 use Illuminate\Support\Facades\Auth;
@@ -56,6 +58,10 @@ Route::group(['namespace' => 'Main'], function () {
 Route::group(['prefix' => 'posts'], function () {
     Route::get('/', [PostMainIndexController::class, '__invoke'])->name('post.index');
     Route::get('/{post}', [ShowController::class, '__invoke'])->name('post.show');
+
+    Route::post('/{post}/comment', [CommentStoreController::class, '__invoke'])->name('post.comment.store');
+    Route::post('/{post}/likes', [LikeStoreController::class, '__invoke'])->name('post.like.store');
+
 });
 
 
