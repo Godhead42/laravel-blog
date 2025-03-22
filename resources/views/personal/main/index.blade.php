@@ -30,7 +30,7 @@
                         <!--begin::Small Box Widget 1-->
                         <div class="small-box text-bg-primary">
                             <div class="inner">
-                                <h3>20</h3>
+                                <h3>{{ $data['likedPostsCount'] }}</h3>
                                 <p>Понравившиеся посты</p>
                             </div>
                             <i class="nav-icon fa-solid fa-heart small-box-icon"></i>
@@ -48,7 +48,7 @@
                         <!--begin::Small Box Widget 2-->
                         <div class="small-box text-bg-success">
                             <div class="inner">
-                                <h3>10</h3>
+                                <h3>{{ $data['commentsCount'] }}</h3>
                                 <p>Комментарии</p>
                             </div>
                             <i class="nav-icon fa-solid fa-comment small-box-icon" ></i>
